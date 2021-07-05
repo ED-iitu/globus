@@ -35,6 +35,11 @@
                         <input type="radio" class="form-check-input" name="lang" value="en">English
                     </label>
                 </div>
+                <div class="form-check-inline">
+                    <label class="form-check-label">
+                        <input type="radio" class="form-check-input" name="kz" value="en">Казахский
+                    </label>
+                </div>
             </div>
             <div class="form-group">
                 <input type="text" class="form-control" id="uname" placeholder="Заголовок" name="title" required>

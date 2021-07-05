@@ -7,6 +7,8 @@ use App\Category;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
+use DB;
+use function PHPUnit\Framework\isEmpty;
 
 class FacilityController extends Controller
 {
@@ -139,14 +141,51 @@ class FacilityController extends Controller
         return redirect()->back()->with('success', 'Заведение успешно удалено');
     }
 
+    public function getByCategory(Request $request)
+    {
+        $lang = $request->lang ?? 'ru';
+
+        $categories = Category::with('facility')->withCount('facility')
+            ->orderBy('id','desc')
+            ->where('lang','=', $lang)
+            ->whereHas('facility', function($query){
+                $query->where('lang','ru');
+            })
+            ->get();
+
+
+        if (count($categories) == 0) {
+            return response([
+                'error' => 'Не найден список категорий',
+            ], 404);
+        }
+
+        return response([
+            'items' => $categories,
+        ], 200);
+    }
+
     public function getAll(Request $request)
     {
         $lang = $request->lang ?? 'ru';
+        $catId = $request->category_id ?? null;
         $paginate = $request->paginate ?? 6;
+
+        if (null !== $catId) {
+            $facilities = Facility::query()->where(['category_id' => $catId, 'lang' => $lang])->orderBy("order", "ASC")->paginate($paginate);
+
+            if ($facilities->isEmpty()) {
+                return response(['error' => 'Список заведений пуст'], 404);
+            }
+
+            return response([
+                'facilities' => $facilities,
+            ], 200);
+        }
 
         $facilities = Facility::query()->where('lang', '=', $lang)->orderBy("order", "ASC")->paginate($paginate);
 
-        if (!$facilities) {
+        if ($facilities->isEmpty()) {
             return response(['error' => 'Список заведений пуст'], 404);
         }
 
@@ -157,22 +196,9 @@ class FacilityController extends Controller
 
     public function getFacilityById(Request $request)
     {
-
-        $catId = $request->category_id ?? null;
         $lang = $request->lang ?? 'ru';
         $id = $request->id ?? null;
 
-        if (null !== $catId) {
-            $facility = Facility::query()->where(['category_id' => $catId, 'lang' => $lang])->first();
-
-            if (!$facility) {
-                return response(['error' => 'Заведение не найдено'], 404);
-            }
-
-            return response([
-                'facility' => $facility,
-            ], 200);
-        }
 
         if (null !== $id) {
             $facility = Facility::query()->where(['id' => $id, 'lang' => $lang])->first();
