@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\About;
 use Illuminate\Http\Request;
+use function PHPUnit\Framework\isEmpty;
 
 class AboutController extends Controller
 {
@@ -101,5 +102,22 @@ class AboutController extends Controller
     public function destroy(About $about)
     {
         //
+    }
+
+    public function aboutInfo(Request $request)
+    {
+        $lang = $request->lang ?? 'ru';
+
+        $about = About::query()->where('lang', '=', $lang)->get();
+
+        if (count($about) == 0) {
+            return response([
+                'error' => "Not Found",
+            ], 404);
+        }
+
+        return response([
+            'info' => $about,
+        ], 200);
     }
 }
