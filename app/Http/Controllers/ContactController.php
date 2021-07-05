@@ -110,4 +110,31 @@ class ContactController extends Controller
     {
         //
     }
+
+
+    public function contactInfo(Request $request)
+    {
+        $lang = $request->lang ?? 'ru';
+
+        $contact = Contact::query()->where('lang', '=', $lang)->first();
+        $data = [];
+
+
+        $myString = $contact->social_links;
+        $myArray  = explode(',', $myString);
+
+        foreach ($myArray as $link) {
+            if (str_contains($link, 'instagram')) {
+               $data['instagram'] = $link;
+            } elseif (str_contains($link, 'facebook')) {
+                $data['facebook'] = $link;
+            }
+        }
+
+        $contact->social_links = $data;
+
+        return response([
+            'info' => $contact,
+        ], 200);
+    }
 }

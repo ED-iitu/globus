@@ -25,3 +25,4 @@ Route::get('/v1/categories', 'CategoryController@getAll')->name('category-list')
 Route::get('/v1/promotions', 'PromotionController@getAll')->name('getAllPromotions');
 Route::get('/v1/promotion', 'PromotionController@getById')->name('getPromotionById');
 Route::get('/v1/banners', 'BannerController@getAll')->name('getAllBanners');
+Route::get('/v1/contact/info', 'ContactController@contactInfo')->name('contactInfo');

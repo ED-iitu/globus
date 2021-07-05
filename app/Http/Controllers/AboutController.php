@@ -14,7 +14,11 @@ class AboutController extends Controller
      */
     public function index()
     {
-        //
+        $abouts = About::all();
+
+        return view('about.index', [
+            'abouts' => $abouts
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class AboutController extends Controller
      */
     public function create()
     {
-        //
+        return view('about.create');
     }
 
     /**
@@ -35,7 +39,14 @@ class AboutController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $about = new About();
+
+        $about::create([
+            'title' => $request->title,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->back()->with('success', 'Информация успешно добавлена');
     }
 
     /**
@@ -46,7 +57,9 @@ class AboutController extends Controller
      */
     public function show(About $about)
     {
-        //
+        return view('about.show', [
+            'about' => $about
+        ]);
     }
 
     /**
@@ -57,7 +70,9 @@ class AboutController extends Controller
      */
     public function edit(About $about)
     {
-        //
+        return view('about.edit', [
+            'about' => $about
+        ]);
     }
 
     /**
@@ -69,7 +84,12 @@ class AboutController extends Controller
      */
     public function update(Request $request, About $about)
     {
-        //
+        $about->update([
+            'title' => $request->title ?? $about->title,
+            'deescription' => $request->description ?? $about->description,
+        ]);
+
+        return redirect()->back()->with('success', 'Информация успешно обновлена');
     }
 
     /**

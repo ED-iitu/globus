@@ -170,6 +170,7 @@ class FacilityController extends Controller
         $lang = $request->lang ?? 'ru';
         $catId = $request->category_id ?? null;
         $paginate = $request->paginate ?? 6;
+        $data = [];
 
         if (null !== $catId) {
             $facilities = Facility::query()->where(['category_id' => $catId, 'lang' => $lang])->orderBy("order", "ASC")->paginate($paginate);
@@ -188,6 +189,24 @@ class FacilityController extends Controller
         if ($facilities->isEmpty()) {
             return response(['error' => 'Список заведений пуст'], 404);
         }
+
+        foreach ($facilities as $facility) {
+            $myString = $facility->social_url;
+            $myArray  = explode(',', $myString);
+
+            foreach ($myArray as $link) {
+                if (str_contains($link, 'instagram')) {
+                    $data['instagram'] = $link;
+                } elseif (str_contains($link, 'facebook')) {
+                    $data['facebook'] = $link;
+                } elseif (str_contains($link, 'vk')) {
+                    $data['vk'] = $link;
+                }
+            }
+
+            $facility->social_url = $data;
+        }
+
 
         return response([
             'facilities' => $facilities,
