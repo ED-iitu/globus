@@ -123,6 +123,49 @@ class FacilityController extends Controller
     public function update(Request $request, Facility $facility)
     {
 
+//            $validated = $request->validate([
+//                'logo'  => 'dimensions:min_width=250,min_height=500',
+//                'image' => 'dimensions:min_width=250,min_height=500'
+//            ]);
+
+
+            $image_link = $request->file('image') ?? $facility->image;
+
+            if (!is_string($image_link)) {
+                $extensionImage = $image_link->getClientOriginalExtension();
+                Storage::disk('public')->put($image_link->getFilename() . '.' . $extensionImage, File::get($image_link));
+
+                $image_link = '/uploads/' . $image_link->getFilename() . '.' . $extensionImage;
+            }
+
+
+            $logo = $request->file('logo') ?? $facility->logo;
+
+            if (!is_string($logo)) {
+                $extensionLogo = $logo->getClientOriginalExtension();
+                Storage::disk('public')->put($logo->getFilename() . '.' . $extensionLogo, File::get($logo));
+
+                $logo = '/uploads/' . $logo->getFilename() . '.' . $extensionLogo;
+            }
+
+
+            $facility->update([
+                'name'        => $request->name ?? $facility->name,
+                'description' => $request->description ?? $facility->description,
+                'lang'        => $request->lang ?? $facility->lang,
+                'logo'        =>  $logo ?? $facility->logo,
+                'image'       =>  $image_link ?? $facility->image,
+                'floor'       => $request->floor ?? $facility->floor,
+                'work_time'   => $request->work_time ?? $facility->work_time,
+                'order'       => $request->order ?? $facility->order,
+                'category_id' => $request->category_id ?? $facility->category_id,
+                'social_url'  => $request->social_url ?? $facility->social_url,
+                'web_url'     => $request->web_url ?? $facility->web_url,
+                'map_coords'  => $request->map_coords ?? $facility->map_coords
+            ]);
+
+            return redirect()->back()->with('success', 'Заведение успешно обновлено');
+
     }
 
     /**
