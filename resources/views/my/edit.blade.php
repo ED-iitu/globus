@@ -9,7 +9,7 @@
                     <h2>Обновление Заведения</h2>
                 </div>
                 <div>
-                    <a class="btn btn-primary" href="{{ route('facility.index') }}"> Вернуться назад</a>
+                    <a class="btn btn-primary" href="{{ route('my.index') }}"> Вернуться назад</a>
                 </div>
             </div>
         </div>
@@ -22,7 +22,7 @@
 
         <hr>
 
-        <form action="{{route('facility.update', $facility)}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('my.update', $facility->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="form-group">
@@ -82,7 +82,7 @@
             
             <div class="form-group mt-3">
                 <label for="logo">Выберите logo</label>
-                <input class="form-control" id="logo" type="file" name="logo" required>
+                <input class="form-control" id="logo" type="file" name="logo">
             </div>
 
             <div class="form-group mt-3">
@@ -90,7 +90,7 @@
             </div>
             <div class="form-group mt-3">
                 <label for="image">Выберите Картинку</label>
-                <input class="form-control" id="image" type="file" name="image" required>
+                <input class="form-control" id="image" type="file" name="image">
             </div>
 
             <button type="submit" class="btn btn-primary mt-3">Обновить</button>

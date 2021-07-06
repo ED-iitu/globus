@@ -18,7 +18,7 @@
             <ul class="list-group mt-3">
                 @foreach ($user->facilities as $my)
                     <li class="list-group-item d-flex justify-content-between align-items-center mt-2">
-                        <a href="{{route('my.show', $my)}}">{{$my->name}}</a>
+                        <a href="{{route('my.show', $my->id)}}">{{$my->name}}</a>
                         <div>Язык: <strong>{{$my->lang == 'ru' ? "Русский" : "English"}}</strong></div>
                         <div>
 

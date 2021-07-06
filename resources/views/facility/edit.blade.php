@@ -87,7 +87,7 @@
             
             <div class="form-group mt-3">
                 <label for="logo">Выберите logo</label>
-                <input class="form-control" id="logo" type="file" name="logo" required>
+                <input class="form-control" id="logo" type="file" name="logo">
             </div>
 
             <div class="form-group mt-3">
@@ -95,7 +95,7 @@
             </div>
             <div class="form-group mt-3">
                 <label for="image">Выберите Картинку</label>
-                <input class="form-control" id="image" type="file" name="image" required>
+                <input class="form-control" id="image" type="file" name="image">
             </div>
 
             <button type="submit" class="btn btn-primary mt-3">Обновить</button>

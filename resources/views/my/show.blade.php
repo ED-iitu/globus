@@ -8,8 +8,8 @@
                     <h2>Заведение: {{$facility->name}}</h2>
                 </div>
                 <div>
-                    <a class="btn btn-primary" href="{{ route('facility.index') }}"> Вернуться назад</a>
-                    <a class="btn btn-success" href="{{ route('facility.edit', $facility) }}"> Редактировать</a>
+                    <a class="btn btn-primary" href="{{ route('my.index') }}"> Вернуться назад</a>
+                    <a class="btn btn-success" href="{{ route('my.edit', $facility) }}"> Редактировать</a>
                 </div>
             </div>
         </div>
