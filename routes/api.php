@@ -26,4 +26,5 @@ Route::get('/v1/promotions', 'PromotionController@getAll')->name('getAllPromotio
 Route::get('/v1/promotion', 'PromotionController@getById')->name('getPromotionById');
 Route::get('/v1/banners', 'BannerController@getAll')->name('getAllBanners');
 Route::get('/v1/contact/info', 'ContactController@contactInfo')->name('contactInfo');
-Route::get('/v1/about', 'AboutController@aboutInfo')->name('aboutInfo');
+Route::get('/v1/about/info', 'AboutController@aboutInfo')->name('aboutInfo');
+Route::get('/v1/renter/info', 'RenterController@renterInfo')->name('renterInfo');

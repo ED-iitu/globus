@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\About;
+use App\Infographic;
 use Illuminate\Http\Request;
 use function PHPUnit\Framework\isEmpty;
 
@@ -101,7 +102,12 @@ class AboutController extends Controller
      */
     public function destroy(About $about)
     {
-        //
+        if($about->delete()){
+            About::query()->where(['id' => $about->id])->delete();
+        }
+
+
+        return redirect()->back()->with('success', 'Информация успешно удалена');
     }
 
     public function aboutInfo(Request $request)
@@ -116,8 +122,11 @@ class AboutController extends Controller
             ], 404);
         }
 
+        $info = Infographic::query()->where('lang', '=', $lang)->get();
+
         return response([
-            'info' => $about,
+            'about' => $about,
+            'infographics' => $info
         ], 200);
     }
 }

@@ -108,7 +108,12 @@ class ContactController extends Controller
      */
     public function destroy(Contact $contact)
     {
-        //
+        if($contact->delete()){
+            Contact::query()->where(['id' => $contact->id])->delete();
+        }
+
+
+        return redirect()->back()->with('success', 'Информация успешно удалена');
     }
 
 

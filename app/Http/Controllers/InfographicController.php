@@ -14,7 +14,11 @@ class InfographicController extends Controller
      */
     public function index()
     {
-        //
+        $infographics = Infographic::all();
+
+        return view('infographic.index', [
+            'infographics' => $infographics
+        ]);
     }
 
     /**
@@ -24,7 +28,7 @@ class InfographicController extends Controller
      */
     public function create()
     {
-        //
+        return view('infographic.create');
     }
 
     /**
@@ -35,7 +39,15 @@ class InfographicController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $info = new Infographic();
+
+        $info::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'lang' => $request->lang
+        ]);
+
+        return redirect()->back()->with('success', 'Информация успешно добавлена');
     }
 
     /**
@@ -46,7 +58,9 @@ class InfographicController extends Controller
      */
     public function show(Infographic $infographic)
     {
-        //
+        return view('infographic.show', [
+            'infographic' => $infographic
+        ]);
     }
 
     /**
@@ -57,7 +71,9 @@ class InfographicController extends Controller
      */
     public function edit(Infographic $infographic)
     {
-        //
+        return view('infographic.edit', [
+            'infographic' => $infographic
+        ]);
     }
 
     /**
@@ -69,7 +85,13 @@ class InfographicController extends Controller
      */
     public function update(Request $request, Infographic $infographic)
     {
-        //
+        $infographic->update([
+            'title' => $request->title ?? $infographic->title,
+            'deescription' => $request->description ?? $infographic->description,
+            'lang' => $request->lang ?? $infographic->lang
+        ]);
+
+        return redirect()->back()->with('success', 'Информация успешно обновлена');
     }
 
     /**
@@ -80,6 +102,11 @@ class InfographicController extends Controller
      */
     public function destroy(Infographic $infographic)
     {
-        //
+        if($infographic->delete()){
+            Infographic::query()->where(['id' => $infographic->id])->delete();
+        }
+
+
+        return redirect()->back()->with('success', 'Информация успешно удалена');
     }
 }
