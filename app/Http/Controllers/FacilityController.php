@@ -285,20 +285,18 @@ class FacilityController extends Controller
         $lang     = $request->get('lang') ?? 'ru';
         $response = [];
         $floor    = strval($floor);
-        $data     = Facility::query()->where(['floor' => $floor, 'lang' => $lang])->get();
+        $data     = Facility::query()->where(['floor' => $floor, 'lang' => $lang])->limit(5)->get();
 
         foreach ($data as $facility) {
             $response[] = [
-                "id" => strtolower($facility->name),
+                "id"   => strtolower($facility->name),
                 "name" => $facility->name,
                 "text" => $facility->description,
-                "d" => $facility->map_coords,
+                "d"    => $facility->map_coords,
                 "logo" => $facility->logo,
-                "img" => $facility->image
+                "img"  => $facility->image
             ];
         }
-
-        dd($response);
 
         return response([
             'Data' => $response,
