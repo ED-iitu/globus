@@ -298,7 +298,7 @@ class FacilityController extends Controller
             ];
         }
 
-        dd(count($data));
+        dd(count($response));
 
         return response([
             'Data' => $response,
