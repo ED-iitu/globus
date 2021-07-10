@@ -298,15 +298,8 @@ class FacilityController extends Controller
             ];
         }
 
-        return response(['count' => count($response),
+        return response([
             'Data' => $response,
         ], 200);
-
-
-      //  return response()->json(['data' => $response], 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
-
-//        return response([
-//            'Data' => $response,
-//        ], 200);
     }
 }
