@@ -301,6 +301,8 @@ class FacilityController extends Controller
             ];
         }
 
+        dd($response);
+
         return response([
             'Data' => $response,
         ], 200);
