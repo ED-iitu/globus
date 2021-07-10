@@ -28,3 +28,4 @@ Route::get('/v1/banners', 'BannerController@getAll')->name('getAllBanners');
 Route::get('/v1/contact/info', 'ContactController@contactInfo')->name('contactInfo');
 Route::get('/v1/about/info', 'AboutController@aboutInfo')->name('aboutInfo');
 Route::get('/v1/renter/info', 'RenterController@renterInfo')->name('renterInfo');
+Route::get('/v1/map', 'FacilityController@map')->name('map');

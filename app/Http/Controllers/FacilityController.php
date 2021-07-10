@@ -278,4 +278,34 @@ class FacilityController extends Controller
             ], 403);
         }
     }
+
+    public function map(Request $request)
+    {
+        $floor = $request->get('floor') ?? 1;
+        $lang = $request->get('lang') ?? 'ru';
+        $response = [];
+
+        $data = Facility::query()->where(['floor' => $floor, 'lang' => $lang])->get();
+
+        if (count($data) == 0) {
+            return response([
+                'error' => "Not found",
+            ], 404);
+        }
+
+        foreach ($data as $facility) {
+            $response[] = [
+                "id" => strtolower($facility->name),
+                "name" => $facility->name,
+                "text" => $facility->description,
+                "d" => $facility->map_coords,
+                "logo" => $facility->logo,
+                "img" => $facility->image
+            ];
+        }
+
+        return response([
+            'Data' => $response,
+        ], 200);
+    }
 }
