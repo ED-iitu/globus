@@ -291,7 +291,7 @@ class FacilityController extends Controller
 
 
         foreach ($data as $facility) {
-            $response[] = [
+            $response["Data"] = [
                 "id" => strtolower($facility->name),
                 "name" => $facility->name,
                 "text" => $facility->description,
@@ -301,8 +301,10 @@ class FacilityController extends Controller
             ];
         }
 
-        return response([
-            'facilities' => $response,
-        ], 200);
+        return json_encode($response);
+
+//        return response([
+//            'facilities' => $response,
+//        ], 200);
     }
 }
