@@ -298,7 +298,7 @@ class FacilityController extends Controller
             ];
         }
 
-        return response()->json(['data' => 'Some Data'], 200);
+        return response()->json(['data' => $response], 200);
 
        // return response()->json(['Data'=>$response], 200);
 
