@@ -289,6 +289,8 @@ class FacilityController extends Controller
 
         $data = Facility::query()->where(['floor' => $floor, 'lang' => $lang])->get();
 
+        dd($data);
+
         if (count($data) == 0) {
             return response([
                 'error' => "Not found",
