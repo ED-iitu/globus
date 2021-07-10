@@ -283,7 +283,7 @@ class FacilityController extends Controller
     {
         $floor    = $request->get('floor') ?? 1;
         $lang     = $request->get('lang') ?? 'ru';
-        //$response = [];
+        $response = [];
         $floor    = strval($floor);
         $data     = Facility::query()->where(['floor' => $floor, 'lang' => $lang])->get();
 
@@ -298,8 +298,10 @@ class FacilityController extends Controller
             ];
         }
 
+        dd($response);
+
         return response([
-            'facilities' => $response,
+            'Data' => $response,
         ], 200);
     }
 }
