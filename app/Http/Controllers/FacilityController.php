@@ -289,12 +289,12 @@ class FacilityController extends Controller
 
         foreach ($data as $facility) {
             $response[] = [
-                "id"   => strtolower($facility->name),
+               // "id"   => strtolower($facility->name),
                 "name" => $facility->name,
-                "text" => $facility->description,
-            //    "d"    => $facility->map_coords,
-                "logo" => $facility->logo,
-                "img"  => $facility->image
+//                "text" => $facility->description,
+//                "d"    => $facility->map_coords,
+//                "logo" => $facility->logo,
+//                "img"  => $facility->image
             ];
         }
 
