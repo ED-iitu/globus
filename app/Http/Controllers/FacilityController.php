@@ -298,6 +298,8 @@ class FacilityController extends Controller
             ];
         }
 
+        $response = json_encode($response);
+
         return response()->json(['data' => $response], 200);
 
        // return response()->json(['Data'=>$response], 200);
