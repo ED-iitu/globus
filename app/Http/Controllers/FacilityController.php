@@ -281,17 +281,14 @@ class FacilityController extends Controller
 
     public function map(Request $request)
     {
-        $floor = $request->get('floor') ?? 1;
-        $lang = $request->get('lang') ?? 'ru';
-        $response = [];
-
-        $floor = strval($floor);
-
-        $data = Facility::query()->where(['floor' => $floor, 'lang' => $lang])->get();
-
+        $floor    = $request->get('floor') ?? 1;
+        $lang     = $request->get('lang') ?? 'ru';
+        //$response = [];
+        $floor    = strval($floor);
+        $data     = Facility::query()->where(['floor' => $floor, 'lang' => $lang])->get();
 
         foreach ($data as $facility) {
-            $response["Data"] = [
+            $response[] = [
                 "id" => strtolower($facility->name),
                 "name" => $facility->name,
                 "text" => $facility->description,
@@ -301,10 +298,8 @@ class FacilityController extends Controller
             ];
         }
 
-        return json_encode($response);
-
-//        return response([
-//            'facilities' => $response,
-//        ], 200);
+        return response([
+            'facilities' => $response,
+        ], 200);
     }
 }
