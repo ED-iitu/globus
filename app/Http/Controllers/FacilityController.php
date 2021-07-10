@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\File;
 use Illuminate\Http\Request;
 use DB;
-use function PHPUnit\Framework\isEmpty;
+use Illuminate\Http\Resources\Json\JsonResource;
 
 class FacilityController extends Controller
 {
@@ -298,7 +298,9 @@ class FacilityController extends Controller
             ];
         }
 
-        return response()->json(['Data'=>$response]);
+        return response()->json(['data' => 'Some Data'], 200);
+
+       // return response()->json(['Data'=>$response], 200);
 
 //        return response([
 //            'Data' => $response,
