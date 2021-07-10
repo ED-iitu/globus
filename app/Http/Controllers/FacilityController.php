@@ -298,11 +298,7 @@ class FacilityController extends Controller
             ];
         }
 
-        $response = json_encode($response);
-
-        return response()->json(['data' => $response], 200);
-
-       // return response()->json(['Data'=>$response], 200);
+        return response()->json(['data' => $response], 200, array('Content-Type' => 'application/json;charset=utf8'), JSON_UNESCAPED_UNICODE);
 
 //        return response([
 //            'Data' => $response,
