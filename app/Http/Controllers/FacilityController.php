@@ -302,7 +302,7 @@ class FacilityController extends Controller
         }
 
         return response([
-            'data' => $response,
+            'facilities' => $response,
         ], 200);
     }
 }
