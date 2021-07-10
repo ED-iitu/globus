@@ -285,7 +285,7 @@ class FacilityController extends Controller
         $lang     = $request->get('lang') ?? 'ru';
         $response = [];
         $floor    = strval($floor);
-        $data     = Facility::query()->where(['floor' => $floor, 'lang' => $lang])->limit(20)->get();
+        $data     = Facility::query()->where(['floor' => $floor, 'lang' => $lang])->get();
 
         foreach ($data as $facility) {
             $response[] = [
@@ -297,6 +297,8 @@ class FacilityController extends Controller
                 "img"  => $facility->image
             ];
         }
+
+        dd(count($data));
 
         return response([
             'Data' => $response,
