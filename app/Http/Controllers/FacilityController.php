@@ -298,7 +298,7 @@ class FacilityController extends Controller
             ];
         }
 
-        return response()->json($response);
+        return response()->json(['Data'=>$response]);
 
 //        return response([
 //            'Data' => $response,
