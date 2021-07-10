@@ -292,7 +292,7 @@ class FacilityController extends Controller
                 "id"   => strtolower($facility->name),
                 "name" => $facility->name,
                 "text" => $facility->description,
-                "d"    => $facility->map_coords,
+            //    "d"    => $facility->map_coords,
                 "logo" => $facility->logo,
                 "img"  => $facility->image
             ];
