@@ -29,3 +29,5 @@ Route::get('/v1/contact/info', 'ContactController@contactInfo')->name('contactIn
 Route::get('/v1/about/info', 'AboutController@aboutInfo')->name('aboutInfo');
 Route::get('/v1/renter/info', 'RenterController@renterInfo')->name('renterInfo');
 Route::get('/v1/map', 'FacilityController@map')->name('map');
+Route::get('/v1/gallery/list', 'GalleryController@galleryList')->name('galleryList');
+Route::get('/v1/gallery/{id}', 'GalleryController@getGalleryById')->name('getGalleryById');

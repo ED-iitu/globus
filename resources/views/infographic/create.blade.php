@@ -35,9 +35,9 @@
                         <input type="radio" class="form-check-input" name="lang" value="en">English
                     </label>
                 </div>
-                <div class="form-check-inline">
+                <div class="form-check-inline">s
                     <label class="form-check-label">
-                        <input type="radio" class="form-check-input" name="kz" value="en">Казахский
+                        <input type="radio" class="form-check-input" name="lang" value="kz">Казахский
                     </label>
                 </div>
             </div>

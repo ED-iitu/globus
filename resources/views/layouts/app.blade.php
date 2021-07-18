@@ -70,6 +70,9 @@
                                     <a class="nav-link" href="{{route('promotion.index')}}">Акции и мероприятия</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{route('gallery.index')}}">Галерея</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{route('user.index')}}">Пользователи</a>
                                 </li>
                             </ul>

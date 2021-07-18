@@ -144,7 +144,7 @@ class PromotionController extends Controller
         $lang = $request->lang ?? 'ru';
         $paginate = $request->paginate ?? 6;
 
-        $promotions = Promotion::query()->where('lang', '=', $lang)->paginate($paginate);
+        $promotions = Promotion::query()->where('lang', '=', $lang)->orderBy('created_at', 'DESC')->paginate($paginate);
 
         if (!$promotions) {
             return response(['error' => 'Список акций пуст'], 404);

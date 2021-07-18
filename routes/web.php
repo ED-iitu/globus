@@ -32,3 +32,4 @@ Route::resource('promotion','PromotionController')->middleware('auth');
 Route::resource('renter','RenterController')->middleware('auth');
 Route::resource('user','UserController')->middleware('auth');
 Route::resource('my','MyFacilityController')->middleware('auth');
+Route::resource('gallery', 'GalleryController')->middleware('auth');

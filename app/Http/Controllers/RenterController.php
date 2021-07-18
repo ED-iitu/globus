@@ -116,7 +116,7 @@ class RenterController extends Controller
     {
         $lang = $request->lang ?? 'ru';
 
-        $renter = Renter::query()->where('lang', '=', $lang)->get();
+        $renter = Renter::query()->where('lang', '=', $lang)->orderBy('created_at', 'DESC')->get();
 
         if (count($renter) == 0) {
             return response([
