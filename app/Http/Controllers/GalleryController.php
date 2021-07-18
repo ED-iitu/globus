@@ -200,7 +200,7 @@ class GalleryController extends Controller
         foreach ($galleries as $gallery) {
             $data[] = [
                 'title' => $gallery->title,
-                'images' => $gallery->images,
+                'images' => json_decode($gallery->images),
                 'date' => $gallery->created_at
             ];
         }
