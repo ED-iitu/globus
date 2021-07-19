@@ -179,6 +179,7 @@ class GalleryController extends Controller
 
         foreach ($galleries as $gallery) {
             $data[] = [
+                'id' => $gallery->id,
                 'title' => $gallery->title,
                 'image' => $gallery->main_image,
                 'date' => $gallery->created_at
@@ -193,12 +194,11 @@ class GalleryController extends Controller
     public function getGalleryById($id)
     {
         $galleries = Gallery::query()->where('id', '=', $id)->get();
-
         $data = [];
-
 
         foreach ($galleries as $gallery) {
             $data[] = [
+                'id' => $gallery->id,
                 'title' => $gallery->title,
                 'images' => json_decode($gallery->images),
                 'date' => $gallery->created_at

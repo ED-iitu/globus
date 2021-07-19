@@ -1,11 +1,14 @@
 @extends('layouts.app')
 
 @section('content')
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
     <div class="container">
 
         <div class="row mb-3">
             <div class="col-lg-12 margin-tb">
-                <div class="pull-left">
+                <div>
                     <h2>Обновление галереи</h2>
                 </div>
                 <div>
@@ -58,5 +61,22 @@
             <button type="submit" class="btn btn-primary" style="margin-top:10px">Submit</button>
         </form>
     </div>
+
+    <script type="text/javascript">
+
+        $(document).ready(function() {
+
+            $(".btn-success").click(function(){
+                var html = $(".clone").html();
+                $(".increment").after(html);
+            });
+
+            $("body").on("click",".btn-danger",function(){
+                $(this).parents(".control-group").remove();
+            });
+
+        });
+
+    </script>
 
 @endsection
