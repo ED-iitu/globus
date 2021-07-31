@@ -87,7 +87,7 @@ class InfographicController extends Controller
     {
         $infographic->update([
             'title' => $request->title ?? $infographic->title,
-            'deescription' => $request->description ?? $infographic->description,
+            'description' => $request->description ?? $infographic->description,
             'lang' => $request->lang ?? $infographic->lang
         ]);
 
