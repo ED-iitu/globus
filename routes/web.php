@@ -33,3 +33,4 @@ Route::resource('renter','RenterController')->middleware('auth');
 Route::resource('user','UserController')->middleware('auth');
 Route::resource('my','MyFacilityController')->middleware('auth');
 Route::resource('gallery', 'GalleryController')->middleware('auth');
+Route::resource('map','MapController')->middleware('auth');

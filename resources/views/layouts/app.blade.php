@@ -73,6 +73,9 @@
                                     <a class="nav-link" href="{{route('gallery.index')}}">Галерея</a>
                                 </li>
                                 <li class="nav-item">
+                                    <a class="nav-link" href="{{route('map.index')}}">Карта</a>
+                                </li>
+                                <li class="nav-item">
                                     <a class="nav-link" href="{{route('user.index')}}">Пользователи</a>
                                 </li>
                             </ul>
