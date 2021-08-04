@@ -166,9 +166,6 @@ class PromotionController extends Controller
 
         $promotion = Promotion::query()->where(['id' => $id, 'lang' => $lang])->first();
 
-
-       // dd($promotion);
-
         return response([
             'promotion' => $promotion,
         ], 200);

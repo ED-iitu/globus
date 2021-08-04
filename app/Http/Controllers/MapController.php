@@ -116,6 +116,24 @@ class MapController extends Controller
      */
     public function destroy(Map $map)
     {
-        //
+        if($map->delete()){
+            Map::query()->where(['id' => $map->id])->delete();
+        }
+
+
+        return redirect()->back()->with('success', 'Карта успешно удалена');
+    }
+
+    public function getMaps(Request $request)
+    {
+        if ($request->floor != null) {
+            $maps = Map::query()->where('floor', '=', $request->floor)->get();
+        } else {
+            $maps = Map::all();
+        }
+
+        return response([
+            'maps' => $maps,
+        ], 200);
     }
 }
