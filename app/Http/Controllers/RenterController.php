@@ -88,7 +88,7 @@ class RenterController extends Controller
     {
         $renter->update([
             'title' => $request->title ?? $renter->title,
-            'deescription' => $request->description ?? $renter->description,
+            'description' => $request->description ?? $renter->description,
             'phone' => $request->phone ?? $renter->phone,
             'lang' => $request->lang ?? $renter->lang
         ]);

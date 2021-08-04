@@ -88,7 +88,7 @@ class AboutController extends Controller
     {
         $about->update([
             'title' => $request->title ?? $about->title,
-            'deescription' => $request->description ?? $about->description,
+            'description' => $request->description ?? $about->description,
         ]);
 
         return redirect()->back()->with('success', 'Информация успешно обновлена');
