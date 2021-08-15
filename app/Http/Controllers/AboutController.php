@@ -45,6 +45,7 @@ class AboutController extends Controller
 
         $about::create([
             'title' => $request->title,
+            'lang' => $request->lang,
             'description' => $request->description,
         ]);
 
