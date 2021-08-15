@@ -67,6 +67,9 @@
                                         <a class="dropdown-item" href="{{route('map.index')}}">
                                             Карта
                                         </a>
+                                        <a class="dropdown-item" href="{{route('additional.index')}}">
+                                            Дополнения
+                                        </a>
                                     </div>
                                 </li>
                                 <li class="nav-item">
