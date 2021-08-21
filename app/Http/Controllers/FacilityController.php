@@ -191,8 +191,8 @@ class FacilityController extends Controller
         $categories = Category::with('facility')->withCount('facility')
             ->orderBy('id','desc')
             ->where('lang','=', $lang)
-            ->whereHas('facility', function($query){
-                $query->where('lang','ru');
+            ->whereHas('facility', function($query, $lang){
+                $query->where('lang','=', $lang);
             })
             ->get();
 

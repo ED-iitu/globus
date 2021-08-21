@@ -18,6 +18,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/v1/email/send', 'UserController@sendEmail')->name('sendEmail');
+
 Route::get('/v1/facilities', 'FacilityController@getAll')->name('facilities-list');
 Route::get('/v1/facilities/getByCategory', 'FacilityController@getByCategory')->name('getByCategory');
 Route::get('/v1/facility', 'FacilityController@getFacilityById')->name('getFacilityById');
