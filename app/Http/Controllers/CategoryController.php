@@ -56,6 +56,7 @@ class CategoryController extends Controller
 
             Category::create([
                 'title' => $validated['title'],
+                'lang' => $request->lang,
                 'image' => '/uploads/' . $image_link->getFilename() . '.' . $extensionImage,
             ]);
 
