@@ -87,7 +87,7 @@ class UserController extends Controller
                     $from = 'pelivan96e@gmail.com';
                     $to = 'pelivan96e@gmail.com';
                     $subject = 'Заявка от арендатора';
-                    $message = '';
+                    $message = '123';
 
                     //things u need
                     $file = $temp_name;
@@ -135,7 +135,16 @@ class UserController extends Controller
                 }else {
                     echo "file type not allowed"; }    //echo an html file
             }else {
-                echo "no file posted";
+                $to      = 'pelivan96e@gmail.com';
+                $subject = 'New message from eurasia-en.com';
+                $message = "test";
+                $headers = 'From: pelivan96e@gmail.com' . "\r\n" .
+                    'Reply-To: pelivan96e@gmail.com' . "\r\n" .
+                    'X-Mailer: PHP/' . phpversion();
+
+                mail($to, $subject, $message, $headers);
+
+                return response(['status' => 'ok'], 200);
             }
         }
     }
