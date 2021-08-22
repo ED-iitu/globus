@@ -60,7 +60,7 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
-        if($user->delete()){
+        if ($user->delete()) {
             User::query()->where(['id' => $user->id])->delete();
         }
 
@@ -70,81 +70,75 @@ class UserController extends Controller
 
     public function sendEmail()
     {
-        if(isset($_POST) && !empty($_POST)) {
-            if(!empty($_FILES['attachment']['name'])) {
-                $file_name = $_FILES['attachment']['name'];
-                $temp_name = $_FILES['attachment']['tmp_name'];
-                $file_type = $_FILES['attachment']['type'];
+        if (isset($_POST) && !empty($_POST)) {
+            if (!empty($_FILES['attachment']['name'])) {
+                // Recipient
+                $to = 'pelivan96e@gmail.com';
 
-                $base = basename($file_name);
+// Sender
+                $from = 'pelivan96e@gmail.com';
+                $fromName = 'Globus-Almaty';
 
-                $extension = substr($base, strlen($base)-4, strlen($base));
+// Email subject
+                $subject = 'Request from renter';
 
-                $allowed_extensions = array(".doc", "docx", ".pdf", ".zip", ".png", ".txt");
-                //check that this file type is allowed
-                if(in_array($extension,$allowed_extensions)) {
-                    //mail essentials
-                    $from = 'pelivan96e@gmail.com';
-                    $to = 'pelivan96e@gmail.com';
-                    $subject = 'Заявка от арендатора';
-                    $message = '123';
+// Attachment file
+                $file = $_FILES['attachment']['name'];
 
-                    //things u need
-                    $file = $temp_name;
-                    $content = chunk_split(base64_encode(file_get_contents($file)));
-                    $uid = md5(uniqid(time()));  //unique identifier
+// Email body content
+                $htmlContent = ' 
+    <h3>PHP Email with Attachment by CodexWorld</h3> 
+    <p>This email is sent from the PHP script with attachment.</p> 
+';
 
-                    //standard mail headers
-                    $header = "From: ".$from;
-                    $header .= "Reply-To: ". 'pelivan96e@gmail.com';
-                    $header .= "MIME-Version: 1.0";
+// Header for sender info
+                $headers = "From: $fromName" . " <" . $from . ">";
 
+// Boundary
+                $semi_rand = md5(time());
+                $mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
 
-                    //declare multiple kinds of email (plain text + attch)
-                    $header .="Content-Type: multipart/mixed; boundary=\"".$uid;
-                    $header .="This is a multi-part message in MIME format.";
+// Headers for attachment
+                $headers .= "\nMIME-Version: 1.0\n" . "Content-Type: multipart/mixed;\n" . " boundary=\"{$mime_boundary}\"";
 
-                    //plain txt part
+// Multipart boundary
+                $message = "--{$mime_boundary}\n" . "Content-Type: text/html; charset=\"UTF-8\"\n" .
+                    "Content-Transfer-Encoding: 7bit\n\n" . $htmlContent . "\n\n";
 
-                    $header .= "--".$uid;
-                    $header .= "Content-type:text/plain; charset=iso-8859-1";
-                    $header .= "Content-Transfer-Encoding: 7bit";
-                    $header .= $message;
+// Preparing attachment
+                if (!empty($file) > 0) {
+                    if (is_file($file)) {
+                        $message .= "--{$mime_boundary}\n";
+                        $fp = @fopen($file, "rb");
+                        $data = @fread($fp, filesize($file));
 
-
-                    //attch part
-                    $header .= "--".$uid;
-                    $header .= "Content-Type: ".$file_type."; name=\"".$file_name;
-                    $header .= "Content-Transfer-Encoding: base64";
-                    $header .= "Content-Disposition: attachment; filename=\"".$file_name;
-                    $header .= $content;  //chucked up 64 encoded attch
-
-
-                    //sending the mail - message is not here, but in the header in a multi part
-
-                    if(mail($to, $subject, $message, $header)) {
-                        return response([
-                            'success' => 'Успешно отправлено',
-                        ], 200);
-
-                    }else {
-                        return response([
-                            'fail' => error_get_last()['message'],
-                        ], 200);
+                        @fclose($fp);
+                        $data = chunk_split(base64_encode($data));
+                        $message .= "Content-Type: application/octet-stream; name=\"" . basename($file) . "\"\n" .
+                            "Content-Description: " . basename($file) . "\n" .
+                            "Content-Disposition: attachment;\n" . " filename=\"" . basename($file) . "\"; size=" . filesize($file) . ";\n" .
+                            "Content-Transfer-Encoding: base64\n\n" . $data . "\n\n";
                     }
-                }else {
-                    echo "file type not allowed"; }    //echo an html file
-            }else {
-                $to      = 'pelivan96e@gmail.com';
-                $subject = 'New message from eurasia-en.com';
-                $message = "test";
-                $headers = 'From: pelivan96e@gmail.com' . "\r\n" .
-                    'Reply-To: pelivan96e@gmail.com' . "\r\n" .
-                    'X-Mailer: PHP/' . phpversion();
+                }
+                $message .= "--{$mime_boundary}--";
+                $returnpath = "-f" . $from;
 
-                mail($to, $subject, $message, $headers);
+// Send email
+                $mail = @mail($to, $subject, $message, $headers, $returnpath);
 
-                return response(['status' => 'ok'], 200);
+// Email sending status
+
+                if ($mail) {
+                    return response([
+                        'success' => 'sent successfully',
+                    ], 200);
+                } else {
+                    return response([
+                        'error' => 'error',
+                    ], 200);
+                }
+            } else {
+                echo "no file posted";
             }
         }
     }
