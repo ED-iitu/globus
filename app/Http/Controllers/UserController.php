@@ -77,7 +77,7 @@ class UserController extends Controller
                 $path = $_FILES['attachment']['name'];
                 $file = $uploaddir .'/'. $filename;
 
-                move_uploaded_file($_FILES['attachment']['name'], $file);
+                move_uploaded_file($_FILES['attachment']['name'], '/tmp/' . $file);
 
                 $mailto = 'pelivan96e@gmail.com';
                 $subject = 'Request from renter';
