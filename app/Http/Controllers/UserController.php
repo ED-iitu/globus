@@ -88,7 +88,7 @@ class UserController extends Controller
 
                 $mailto = 'pelivan96e@gmail.com';
                 $subject = 'Request from renter';
-                $message = "<h2>NAME: $name</h2><br><h2>PHONE: $phone</h2><br><h2>EMAIL: $email</h2>";
+                $message = "<h2>$name</h2><br><h2>$phone</h2><br><h2>$email</h2>";
 
                 $content = file_get_contents($uploadfile);
                 $content = chunk_split(base64_encode($content));
