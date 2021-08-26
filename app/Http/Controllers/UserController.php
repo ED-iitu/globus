@@ -72,28 +72,21 @@ class UserController extends Controller
     {
         if (isset($_POST) && !empty($_POST)) {
             if (!empty($_FILES['attachment']['name'])) {
-                $uploaddir = '/uploads';
-                $filename = $_FILES['attachment']['name'];
-                $path = $_FILES['attachment']['name'];
-                $file = $uploaddir .'/'. $filename;
+                $uploaddir = '/var/www/uploads/';
+                $uploadfile = $uploaddir . basename($_FILES['attachment']['name']);
 
-
-                $uploadFileDir = './uploads/';
-                $dest_path = $uploadFileDir . $filename;
-
-                if(move_uploaded_file($uploaddir, $dest_path))
-                {
-                    echo 'File is successfully uploaded.';
+                if (move_uploaded_file($_FILES['attachment']['tmp_name'], $uploadfile)) {
+                    echo "Файл корректен и был успешно загружен.\n";
+                } else {
+                    echo "Возможная атака с помощью файловой загрузки!\n";
                 }
-                else
-                {
-                    echo 'There was some error moving the file to upload directory. Please make sure the upload directory is writable by web server.';
-                }
+
+
                 $mailto = 'pelivan96e@gmail.com';
                 $subject = 'Request from renter';
                 $message = 'Message from renter';
 
-                $content = file_get_contents($dest_path);
+                $content = file_get_contents($uploadfile);
                 $content = chunk_split(base64_encode($content));
 
                 // a random hash will be necessary to send mixed content
@@ -117,7 +110,7 @@ class UserController extends Controller
 
                 // attachment
                 $body .= "--" . $separator . $eol;
-                $body .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"" . $eol;
+                $body .= "Content-Type: application/octet-stream; name=\"" . $uploadfile . "\"" . $eol;
                 $body .= "Content-Transfer-Encoding: base64" . $eol;
                 $body .= "Content-Disposition: attachment" . $eol;
                 $body .= $content . $eol;
