@@ -72,13 +72,17 @@ class UserController extends Controller
     {
         if (isset($_POST) && !empty($_POST)) {
             if (!empty($_FILES['attachment']['name'])) {
-                $uploaddir = '/var/www/admin.globus.kz/public/uploads';
+                $uploaddir = '/uploads';
                 $filename = $_FILES['attachment']['name'];
                 $path = $_FILES['attachment']['name'];
                 $file = $uploaddir .'/'. $filename;
 
-                move_uploaded_file($_FILES['attachment']['name'], '/tmp/' . $file);
 
+                if (move_uploaded_file($_FILES['attachment']['tmp_name'], $file)) {
+                    echo "Файл корректен и был успешно загружен.\n";
+                } else {
+                    echo "Возможная атака с помощью файловой загрузки!\n";
+                }
                 $mailto = 'pelivan96e@gmail.com';
                 $subject = 'Request from renter';
                 $message = 'Message from renter';
