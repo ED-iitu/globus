@@ -81,10 +81,13 @@ class UserController extends Controller
                     echo "Возможная атака с помощью файловой загрузки!\n";
                 }
 
+                $phone = $_POST['phone'] ?? 'test';
+                $name = $_POST['name'] ?? '123123';
+
 
                 $mailto = 'pelivan96e@gmail.com';
                 $subject = 'Request from renter';
-                $message = 'Message from renter';
+                $message = "<h2>NAME: $name</h2><br><h2>PHONE: $phone</h2>";
 
                 $content = file_get_contents($uploadfile);
                 $content = chunk_split(base64_encode($content));
