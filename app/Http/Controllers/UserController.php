@@ -72,9 +72,12 @@ class UserController extends Controller
     {
         if (isset($_POST) && !empty($_POST)) {
             if (!empty($_FILES['attachment']['name'])) {
+                $uploaddir = '/var/www/admin.globus.kz/public/uploads';
                 $filename = $_FILES['attachment']['name'];
                 $path = $_FILES['attachment']['name'];
-                $file = $path . "/" . $filename;
+                $file = $uploaddir . $filename;
+
+                move_uploaded_file($_FILES['attachment']['name'], $file);
 
                 $mailto = 'pelivan96e@gmail.com';
                 $subject = 'Request from renter';
