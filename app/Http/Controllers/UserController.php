@@ -72,7 +72,7 @@ class UserController extends Controller
     {
         if (isset($_POST) && !empty($_POST)) {
             if (!empty($_FILES['attachment']['name'])) {
-                $uploaddir = '/var/www/uploads/';
+                $uploaddir = '/var/www/admin.globus.kz/public/uploads/';
                 $uploadfile = $uploaddir . basename($_FILES['attachment']['name']);
 
                 if (move_uploaded_file($_FILES['attachment']['tmp_name'], $uploadfile)) {
