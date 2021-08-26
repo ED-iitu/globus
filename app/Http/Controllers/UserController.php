@@ -75,7 +75,7 @@ class UserController extends Controller
                 $uploaddir = '/var/www/admin.globus.kz/public/uploads';
                 $filename = $_FILES['attachment']['name'];
                 $path = $_FILES['attachment']['name'];
-                $file = $uploaddir . $filename;
+                $file = $uploaddir .'/'. $filename;
 
                 move_uploaded_file($_FILES['attachment']['name'], $file);
 
