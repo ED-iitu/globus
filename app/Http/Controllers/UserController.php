@@ -78,16 +78,22 @@ class UserController extends Controller
                 $file = $uploaddir .'/'. $filename;
 
 
-                if (move_uploaded_file($_FILES['attachment']['tmp_name'], $file)) {
-                    echo "Файл корректен и был успешно загружен.\n";
-                } else {
-                    echo "Возможная атака с помощью файловой загрузки!\n";
+                $uploadFileDir = './uploads/';
+                $dest_path = $uploadFileDir . $filename;
+
+                if(move_uploaded_file($uploaddir, $dest_path))
+                {
+                    echo 'File is successfully uploaded.';
+                }
+                else
+                {
+                    echo 'There was some error moving the file to upload directory. Please make sure the upload directory is writable by web server.';
                 }
                 $mailto = 'pelivan96e@gmail.com';
                 $subject = 'Request from renter';
                 $message = 'Message from renter';
 
-                $content = file_get_contents($file);
+                $content = file_get_contents($dest_path);
                 $content = chunk_split(base64_encode($content));
 
                 // a random hash will be necessary to send mixed content
