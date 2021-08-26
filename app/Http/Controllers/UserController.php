@@ -72,70 +72,50 @@ class UserController extends Controller
     {
         if (isset($_POST) && !empty($_POST)) {
             if (!empty($_FILES['attachment']['name'])) {
-                // Recipient
-                $to = 'pelivan96e@gmail.com';
+                $filename = $_FILES['attachment']['name'];
+                $path = $_FILES['attachment']['name'];
+                $file = $path . "/" . $filename;
 
-// Sender
-                $from = 'pelivan96e@gmail.com';
-                $fromName = 'Globus-Almaty';
-
-// Email subject
+                $mailto = 'pelivan96e@gmail.com';
                 $subject = 'Request from renter';
+                $message = 'Message from renter';
 
-// Attachment file
-                $file = $_FILES['attachment']['name'];
+                $content = file_get_contents($file);
+                $content = chunk_split(base64_encode($content));
 
-// Email body content
-                $htmlContent = ' 
-    <h3>PHP Email with Attachment by CodexWorld</h3> 
-    <p>This email is sent from the PHP script with attachment.</p> 
-';
+                // a random hash will be necessary to send mixed content
+                $separator = md5(time());
 
-// Header for sender info
-                $headers = "From: $fromName" . " <" . $from . ">";
+                // carriage return type (RFC)
+                $eol = "\r\n";
 
-// Boundary
-                $semi_rand = md5(time());
-                $mime_boundary = "==Multipart_Boundary_x{$semi_rand}x";
+                // main header (multipart mandatory)
+                $headers = "From: name <pelivan96e@gmail.com>" . $eol;
+                $headers .= "MIME-Version: 1.0" . $eol;
+                $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol;
+                $headers .= "Content-Transfer-Encoding: 7bit" . $eol;
+                $headers .= "This is a MIME encoded message." . $eol;
 
-// Headers for attachment
-                $headers .= "\nMIME-Version: 1.0\n" . "Content-Type: multipart/mixed;\n" . " boundary=\"{$mime_boundary}\"";
+                // message
+                $body = "--" . $separator . $eol;
+                $body .= "Content-Type: text/plain; charset=\"iso-8859-1\"" . $eol;
+                $body .= "Content-Transfer-Encoding: 8bit" . $eol;
+                $body .= $message . $eol;
 
-// Multipart boundary
-                $message = "--{$mime_boundary}\n" . "Content-Type: text/html; charset=\"UTF-8\"\n" .
-                    "Content-Transfer-Encoding: 7bit\n\n" . $htmlContent . "\n\n";
+                // attachment
+                $body .= "--" . $separator . $eol;
+                $body .= "Content-Type: application/octet-stream; name=\"" . $filename . "\"" . $eol;
+                $body .= "Content-Transfer-Encoding: base64" . $eol;
+                $body .= "Content-Disposition: attachment" . $eol;
+                $body .= $content . $eol;
+                $body .= "--" . $separator . "--";
 
-// Preparing attachment
-                if (!empty($file) > 0) {
-                    if (is_file($file)) {
-                        $message .= "--{$mime_boundary}\n";
-                        $fp = @fopen($file, "rb");
-                        $data = @fread($fp, filesize($file));
-
-                        @fclose($fp);
-                        $data = chunk_split(base64_encode($data));
-                        $message .= "Content-Type: application/octet-stream; name=\"" . basename($file) . "\"\n" .
-                            "Content-Description: " . basename($file) . "\n" .
-                            "Content-Disposition: attachment;\n" . " filename=\"" . basename($file) . "\"; size=" . filesize($file) . ";\n" .
-                            "Content-Transfer-Encoding: base64\n\n" . $data . "\n\n";
-                    }
-                }
-                $message .= "--{$mime_boundary}--";
-                $returnpath = "-f" . $from;
-
-// Send email
-                $mail = @mail($to, $subject, $message, $headers, $returnpath);
-
-// Email sending status
-
-                if ($mail) {
-                    return response([
-                        'success' => 'sent successfully',
-                    ], 200);
+                //SEND Mail
+                if (mail($mailto, $subject, $body, $headers)) {
+                    echo "mail send ... OK"; // or use booleans here
                 } else {
-                    return response([
-                        'error' => 'error',
-                    ], 200);
+                    echo "mail send ... ERROR!";
+                    print_r( error_get_last() );
                 }
             } else {
                 echo "no file posted";
