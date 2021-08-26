@@ -83,11 +83,12 @@ class UserController extends Controller
 
                 $phone = $_POST['phone'] ?? 'test';
                 $name = $_POST['name'] ?? '123123';
+                $email = $_POST['email'] ?? 'test@gmail.com';
 
 
                 $mailto = 'pelivan96e@gmail.com';
                 $subject = 'Request from renter';
-                $message = "<h2>NAME: $name</h2><br><h2>PHONE: $phone</h2>";
+                $message = "<h2>NAME: $name</h2><br><h2>PHONE: $phone</h2><br><h2>EMAIL: $email</h2>";
 
                 $content = file_get_contents($uploadfile);
                 $content = chunk_split(base64_encode($content));
