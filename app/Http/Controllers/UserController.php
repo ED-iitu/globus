@@ -85,10 +85,11 @@ class UserController extends Controller
                 $name = $_POST['name'] ?? '123123';
                 $email = $_POST['email'] ?? 'test@gmail.com';
 
-
+// carriage return type (RFC)
+                $eol = "\r\n";
                 $mailto = 'pelivan96e@gmail.com';
                 $subject = 'Request from renter';
-                $message = "Name: " . $name . '\n' . "Email: " . $email . '\n' . "Phone: " . $phone;
+                $message = "Name: " . $name . '\n' . "Email: " . $email . '\n' . "Phone: " . $phone . $eol;
 
                 $content = file_get_contents($uploadfile);
                 $content = chunk_split(base64_encode($content));
@@ -96,8 +97,7 @@ class UserController extends Controller
                 // a random hash will be necessary to send mixed content
                 $separator = md5(time());
 
-                // carriage return type (RFC)
-                $eol = "\r\n";
+
 
                 // main header (multipart mandatory)
                 $headers = "From: name <pelivan96e@gmail.com>" . $eol;
