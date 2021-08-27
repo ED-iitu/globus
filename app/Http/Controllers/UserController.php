@@ -89,15 +89,13 @@ class UserController extends Controller
                 $eol = "\r\n";
                 $mailto = 'pelivan96e@gmail.com';
                 $subject = 'Request from renter';
-                $message = $name . "\n" . $email;
+                $message = $name . "\n" . $email . "\n" . $phone;
 
                 $content = file_get_contents($uploadfile);
                 $content = chunk_split(base64_encode($content));
 
                 // a random hash will be necessary to send mixed content
                 $separator = md5(time());
-
-
 
                 // main header (multipart mandatory)
                 $headers = "From: name <pelivan96e@gmail.com>" . $eol;
@@ -122,13 +120,51 @@ class UserController extends Controller
 
                 //SEND Mail
                 if (mail($mailto, $subject, $body, $headers)) {
-                    echo "mail send ... OK"; // or use booleans here
+                    return response([
+                        'message' => "Email sent successfully",
+                    ], 200);
                 } else {
-                    echo "mail send ... ERROR!";
-                    print_r( error_get_last() );
+                    return response([
+                        'message' => "error",
+                    ], 500);
                 }
             } else {
-                echo "no file posted";
+                $name = $_POST['name'];
+                $phone = $_POST['phone'];
+                $messageText = $_POST['message'];
+
+                $eol = "\r\n";
+                $mailto = 'pelivan96e@gmail.com';
+                $subject = 'Request from contact form (globus-almaty.kz)';
+
+                $message = $name . "\n" . $phone . "\n" . $messageText;
+
+                $separator = md5(time());
+
+                // main header (multipart mandatory)
+                $headers = "From: name <pelivan96e@gmail.com>" . $eol;
+                $headers .= "MIME-Version: 1.0" . $eol;
+                $headers .= "Content-Type: multipart/mixed; boundary=\"" . $separator . "\"" . $eol;
+                $headers .= "Content-Transfer-Encoding: 7bit" . $eol;
+                $headers .= "This is a MIME encoded message." . $eol;
+
+
+                // message
+                $body = "--" . $separator . $eol;
+                $body .= "Content-Type: text/plain; charset=\"iso-8859-1\"" . $eol;
+                $body .= "Content-Transfer-Encoding: 8bit" . $eol;
+                $body .= $message . $eol;
+
+                //SEND Mail
+                if (mail($mailto, $subject, $body, $headers)) {
+                    return response([
+                        'message' => "Email sent successfully",
+                    ], 200);
+                } else {
+                    return response([
+                        'message' => "error",
+                    ], 500);
+                }
             }
         }
     }
